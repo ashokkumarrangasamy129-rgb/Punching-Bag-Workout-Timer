@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Punching Bag Workout</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Control Panel -->
+    <aside class="control-panel">
+      <div class="panel-header">
+        <h1>🥊 Punch Master</h1>
+        <p class="subtitle">Custom Workout Builder</p>
+      </div>
+
+      <form class="workout-form">
+        <div class="form-group">
+          <label for="prepTime">Preparation Time (seconds)</label>
+          <div class="input-wrapper">
+            <input 
+              type="range" 
+              id="prepTime" 
+              min="0" 
+              max="60" 
+              value="10" 
+              class="slider"
+            />
+            <input 
+              type="number" 
+              id="prepTimeInput" 
+              min="0" 
+              max="60" 
+              value="10" 
+              class="number-input"
+            />
+            <span class="unit">s</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="workTime">Workout Duration (seconds)</label>
+          <div class="input-wrapper">
+            <input 
+              type="range" 
+              id="workTime" 
+              min="10" 
+              max="300" 
+              value="60" 
+              class="slider"
+            />
+            <input 
+              type="number" 
+              id="workTimeInput" 
+              min="10" 
+              max="300" 
+              value="60" 
+              class="number-input"
+            />
+            <span class="unit">s</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="restTime">Rest Duration (seconds)</label>
+          <div class="input-wrapper">
+            <input 
+              type="range" 
+              id="restTime" 
+              min="5" 
+              max="120" 
+              value="20" 
+              class="slider"
+            />
+            <input 
+              type="number" 
+              id="restTimeInput" 
+              min="5" 
+              max="120" 
+              value="20" 
+              class="number-input"
+            />
+            <span class="unit">s</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rounds">Number of Rounds</label>
+          <div class="input-wrapper">
+            <input 
+              type="range" 
+              id="rounds" 
+              min="1" 
+              max="20" 
+              value="5" 
+              class="slider"
+            />
+            <input 
+              type="number" 
+              id="roundsInput" 
+              min="1" 
+              max="20" 
+              value="5" 
+              class="number-input"
+            />
+            <span class="unit">rounds</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="difficulty">Difficulty Level</label>
+          <select id="difficulty" class="select-input">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div class="workout-summary">
+          <h3>Workout Summary</h3>
+          <div class="summary-item">
+            <span>Total Duration:</span>
+            <strong id="totalDuration">00:00</strong>
+          </div>
+          <div class="summary-item">
+            <span>Rounds:</span>
+            <strong id="summaryRounds">5</strong>
+          </div>
+          <div class="summary-item">
+            <span>Per Round:</span>
+            <strong id="perRound">80s</strong>
+          </div>
+        </div>
+      </form>
+
+      <div class="control-buttons">
+        <button id="startBtn" class="btn btn-start">Start Workout</button>
+        <button id="pauseBtn" class="btn btn-pause" disabled>Pause</button>
+        <button id="resumeBtn" class="btn btn-resume" disabled>Resume</button>
+        <button id="resetBtn" class="btn btn-reset">Reset</button>
+      </div>
+    </aside>
+
+    <!-- Display Panel -->
+    <main class="display-panel">
+      <!-- Header Status -->
+      <div class="status-bar">
+        <div class="status-item">
+          <span class="status-label">Phase</span>
+          <span class="status-value" id="phaseText">READY</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Round</span>
+          <span class="status-value" id="roundText">0/5</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Status</span>
+          <span class="status-value status-pill" id="statusPill">STOPPED</span>
+        </div>
+      </div>
+
+      <!-- Main Timer Display -->
+      <div class="timer-section">
+        <div class="timer-display">
+          <div class="timer-value" id="timerValue">00:00</div>
+          <div class="timer-label" id="timerLabel">Get Ready</div>
+        </div>
+      </div>
+
+      <!-- Punch Combo Section -->
+      <div class="combo-section">
+        <h2>Current Combo</h2>
+        <div class="combo-display" id="comboDisplay">
+          <div class="combo-item">Ready</div>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="stats-section">
+        <div class="stat-card">
+          <div class="stat-label">Round Time</div>
+          <div class="stat-value" id="roundTimeValue">00:00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Elapsed</div>
+          <div class="stat-value" id="elapsedValue">00:00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Remaining</div>
+          <div class="stat-value" id="remainingValue">00:00</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-label">Session Progress</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-info" id="progressInfo">0%</div>
+      </div>
+
+      <!-- Motivation Message -->
+      <div class="motivation-box" id="motivationBox">
+        <p id="motivationText">Set your workout and hit start!</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
